@@ -2,7 +2,7 @@
 
 ## Download datasets
 There are three UVA datasets 2020AA, 2021AA, and 2021AB that are available for download.
-The official link with UMLS authentication from the NLM is under processing. For now, the temporary link for downloading: https://drive.google.com/drive/folders/1P72Q2FNo4MKEgIBVv2lGQinJzwHF2cuG?usp=sharing
+The official link with UMLS authentication from the NLM is under processing. For now, the temporary link for downloading is [UVA](https://drive.google.com/drive/folders/1P72Q2FNo4MKEgIBVv2lGQinJzwHF2cuG?usp=sharing).
 
 ## References
 1. Vinh Nguyen, Olivier Bodenreider. _UVA Resources for Biomedical Vocabulary Alignment at Scale in the UMLS Metathesaurus_. 2022.
