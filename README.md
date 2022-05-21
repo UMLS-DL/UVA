@@ -28,7 +28,7 @@ $ ls 2021AA-ACTIVE/
 ```
 
 If using a downloaded UVA dataset, a MRCONSO_MASTER.RRF file needs to be generated for the baselines as follows.
-```
+<pre>
 #!/bin/bash
 # Generating datasets
 WORKSPACE=/data/Bodenreider_UMLS_DL/UVA; \
@@ -38,12 +38,12 @@ python $WORKSPACE/bin/run_data_generator.py \
 --workspace_dp=$WORKSPACE \
 --umls_version_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION \
 --umls_dl_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL \
---gen_master_file=true \
---gen_pos_pairs=false \
---gen_swarm_file=false \
---exec_gen_neg_pairs_swarm=false \
---gen_neg_pairs=false \
---gen_dataset=false \
+<b>--gen_master_file=true </b> \
+<b>--gen_pos_pairs=false</b> \
+<b>--gen_swarm_file=false</b> \
+<b>--exec_gen_neg_pairs_swarm=false</b> \
+<b>--gen_neg_pairs=false</b> \
+<b>--gen_dataset=false</b> \
 --run_slurm_job=false \
 --ntasks=499 \
 --n_processes=20 \
@@ -51,7 +51,7 @@ python $WORKSPACE/bin/run_data_generator.py \
 --dataset_version_dn=NEGPOS1 \
 --neg_to_pos_rate=1 \
 --debug=false
-```
+</pre>
 The resulting MRCONSO_MASTER.RRF file is located in the $WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL
 
 ## How to generate a new UVA dataset?
@@ -62,7 +62,7 @@ During the installation process, active subset of vocabularies can be selected.
 
 Step 2: after the installation process finishes, copy the .RRF files in the resulting META directory into $WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META.
 
-```
+<pre>
 $ cd $WORKSPACE/UMLS_VERSIONS/
 $ ls
 2020AA-ACTIVE 2021AA-ACTIVE 2021AB-ACTIVE
@@ -70,8 +70,8 @@ $ cd 2021AA-ACTIVE
 $ ls
 META
 $ cd META
-MRCONSO.RRF  MRREL.RRF  MRSTY.RRF  MRXNS_ENG.RRF  MRXNW_ENG.RRF
-```
+<b>MRCONSO.RRF  MRREL.RRF  MRSTY.RRF  MRXNS_ENG.RRF  MRXNW_ENG.RRF</b>
+</pre>
 The above .RRF files are **mandatory** for the UVA project.
 
 Step 3: install two conda profiles: `uva_kge` and `tf_uva`
@@ -83,7 +83,7 @@ $ sh $WORKSPACE/bin/install_tf230_uva.sh
 ###  Generating a UVA dataset
 Below is the command for generating the 2021AA-ACTIVE dataset using 499 nodes with 20 threads and 180GB of RAM in each node.
 
-```
+<pre>
 $ cat $WORKSPACE/bin/datagen/biowulf_data_generator_2021AA.sh
 #!/bin/bash
 # Generating datasets
@@ -94,20 +94,20 @@ python $WORKSPACE/bin/run_data_generator.py \
 --workspace_dp=$WORKSPACE \
 --umls_version_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION \
 --umls_dl_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL \
---gen_master_file=true \
---gen_pos_pairs=true \
---gen_swarm_file=true \
---exec_gen_neg_pairs_swarm=true \
---gen_neg_pairs=true \
---gen_dataset=true \
+<b>--gen_master_file=true</b> \
+<b>--gen_pos_pairs=true</b> \
+<b>--gen_swarm_file=true</b> \
+<b>--exec_gen_neg_pairs_swarm=true</b> \
+<b>--gen_neg_pairs=true</b> \
+<b>--gen_dataset=true</b> \
 --run_slurm_job=true \
 --ntasks=499 \
 --n_processes=20 \
 --ram=180 \
---dataset_version_dn=NEGPOS1 \
+<b>--dataset_version_dn=NEGPOS1</b> \
 --neg_to_pos_rate=1 \
 --debug=false
-```
+</pre>
 The resulting dataset version is located inside the $WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1 with two folders GENTEST_DS and LEARNING_DS.
 
 Below is the sample code to deploy the above data generator job to NIH Biowulf HPC
@@ -121,7 +121,7 @@ swarm -f $WORKSPACE/bin/datagen/biowulf_data_generator_2021AA.sh
 ## How to train a LexLM model using a UVA dataset?
 Below are the commands for preparing, training, and testing a LexLM model to be executed in a sequence. The paths need to be adjusted according to the project setting if using the downloaded datasets.
 
-```
+<pre>
 WORKSPACE=/data/Bodenreider_UMLS_DL/UVA; \
 UMLS_VERSION=2021AA-ACTIVE; \
 python $WORKSPACE/bin/run_umls_classifier.py \
@@ -133,13 +133,13 @@ python $WORKSPACE/bin/run_umls_classifier.py \
 --run_id="lexlm_uva_run1"  \
 --n_epoch=100  \
 --batch_size=8192  \
---do_train=false \
---do_predict=false \
---do_prep=true  \
+<b>--do_train=false</b> \
+<b>--do_predict=false</b> \
+<b>--do_prep=true</b>  \
 --generator_workers=16
-```
+</pre>
 
-```
+<pre>
 conda activate tf_uva; \
 WORKSPACE=/data/Bodenreider_UMLS_DL/UVA; \
 UMLS_VERSION=2021AA-ACTIVE; \
@@ -153,13 +153,13 @@ python  $WORKSPACE/bin/run_umls_classifier.py \
 --exp_flavor=1 \
 --n_epoch=100  \
 --batch_size=8192  \
---do_prep=false  \
---do_train=true \
---do_predict=false  \
+<b>--do_prep=false</b>  \
+<b>--do_train=true</b> \
+<b>--do_predict=false</b>  \
 --generator_workers=8
-```
+</pre>
 
-```
+<pre>
 WORKSPACE=/data/Bodenreider_UMLS_DL/UVA; \
 UMLS_VERSION=2021AA-ACTIVE; \
 python  $WORKSPACE/bin/run_umls_classifier.py \
@@ -173,17 +173,17 @@ python  $WORKSPACE/bin/run_umls_classifier.py \
 --exp_flavor=1 \
 --n_epoch=100  \
 --batch_size=8192  \
---do_prep=false  \
---do_train=false \
---do_predict=true  \
+<b>--do_prep=false</b>  \
+<b>--do_train=false</b> \
+<b>--do_predict=true</b>  \
 --start_epoch_predict=1 \
 --end_epoch_predict=100 \
 --generator_workers=8 
-```
+</pre>
 ## How to train a ConLM model using a UVA dataset?
 Below are the commands for preparing, training, and testing a ConLM model to be executed in a sequence. The paths need to be adjusted according to the project setting if using the downloaded datasets.
 
-```
+<pre>
 $ cd $WORKSPACE/bin/conlm
 conda activate uva_kge; \
 WORKSPACE=/data/Bodenreider_UMLS_DL/UVA; \
@@ -197,8 +197,8 @@ mkdir -p $KGE_HOME; \
 cp $WORKSPACE/bin/conlm/UMLS_Parser.py $WORKSPACE/bin/conlm/gen_dataset.sh $WORKSPACE/bin/conlm/gen_direct.sh $WORKSPACE/bin/conlm/SemGroups.txt $KGE_HOME/ ; \
 cd $KGE_HOME; \
 sh $KEG_HOME/gen_dataset.sh; 
-```
-```
+</pre>
+<pre>
 python $WORKSPACE/bin/run_train_kge.py \
 --root_dir=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL/CONLM \
 --kge_model=$MODEL \
@@ -216,8 +216,8 @@ python $WORKSPACE/bin/run_train_kge.py \
 --num_negs_per_pos=50 \
 --create_inverse_triples=False \
 --enable_eval_filtering=True; 
-```
-```
+</pre>
+<pre>
 python $WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL/CONLM/UMLS_Parser.py \
 --KGE_Home=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL/CONLM \
 --meta_dl_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL \
@@ -227,8 +227,8 @@ python $WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL/CONLM/UMLS_Parser.py \
 --Variant=$VARIANT \
 --context_dim=50 \
 --num_epochs=$EPOCHS; 
-```
-```
+</pre>
+<pre>
 conda activate tf_uva; \
 python $WORKSPACE/bin/run_umls_classifier.py \
 --workspace_dp=$WORKSPACE \
@@ -237,7 +237,7 @@ python $WORKSPACE/bin/run_umls_classifier.py \
 --umls_dl_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL \
 --dataset_version_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1 \
 --train_dataset_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1/LEARNING_DS/ALL \
---exp_flavor=2 \
+<b>--exp_flavor=2</b> \
 --context_vector_dim=150 \
 --ConVariant=$VARIANT \
 --Model=$MODEL \
@@ -247,11 +247,11 @@ python $WORKSPACE/bin/run_umls_classifier.py \
 --run_id="conlm_uva_run1_$UMLS_VERSION" \
 --n_epoch=$EPOCHS \
 --batch_size=8192 \
---do_train=True \
---do_predict=False \
+<b>--do_train=True</b> \
+<b>--do_predict=False</b> \
 --generator_workers=8 \
-```
-```
+</pre>
+<pre>
 conda activate tf_uva ; \
 python $WORKSPACE/bin/run_umls_classifier.py \
 --workspace_dp=$WORKSPACE \
@@ -261,7 +261,7 @@ python $WORKSPACE/bin/run_umls_classifier.py \
 --dataset_version_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1 \
 --test_dataset_fp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1/GENTEST_DS/GENTEST_DS_ALL_TEST_DS.RRF \
 --train_dataset_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1/LEARNING_DS/ALL \
---exp_flavor=2 \
+<b>--exp_flavor=2</b> \
 --context_vector_dim=150 \
 --ConVariant=$VARIANT \
 --Model=$MODEL \
@@ -271,12 +271,12 @@ python $WORKSPACE/bin/run_umls_classifier.py \
 --run_id="conlm_uva_run1_$UMLS_VERSION" \
 --n_epoch=$EPOCHS \
 --batch_size=8192 \
---do_train=False \
---do_predict=True \
+<b>--do_train=False</b> \
+<b>--do_predict=True</b> \
 --generator_workers=8 \
 --start_epoch_predict=1 \
 --end_epoch_predict=100
-```
+</pre>
 The resulting training performance and checkpoints of each run is located inside the `TRAINING` folder of each $UMLS_VERSION.
 
 ## References
