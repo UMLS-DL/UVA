@@ -1,0 +1,2 @@
+WORKSPACE=/data/Bodenreider_UMLS_DL/UVA; \
+swarm -f $WORKSPACE/bin/rba/biowulf_rba_doprep_2021AB.sh -b 1 -g 180 -t 2 --time 2-00:00:00 --logdir $WORKSPACE/logs --job-name=21AB_RBA
