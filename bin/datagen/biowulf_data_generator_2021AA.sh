@@ -7,8 +7,8 @@ python $WORKSPACE/bin/run_data_generator.py \
 --workspace_dp=$WORKSPACE \
 --umls_version_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION \
 --umls_dl_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL \
---gen_master_file=false \
---gen_pos_pairs=false \
+--gen_master_file=true \
+--gen_pos_pairs=true \
 --gen_swarm_file=true \
 --exec_gen_neg_pairs_swarm=true \
 --gen_neg_pairs=true \
