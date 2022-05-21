@@ -76,6 +76,8 @@ python $WORKSPACE/bin/run_data_generator.py \
 --neg_to_pos_rate=1 \
 --debug=false
 ```
+The resulting dataset version is located inside the $WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1 with two folders GENTEST_DS and LEARNING_DS.
+
 Below is the sample code to deploy the above job to NIH Biowulf HPC
 ```
 swarm -f $WORKSPACE/bin/datagen/biowulf_data_generator_2021AA.sh 
