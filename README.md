@@ -1,6 +1,6 @@
 # UMLS Vocabulary Alignment
 ## Requirements
-Step 1: install a version of UMLS, for example, 2021AA-ACTIVE. UMLS can be downloaded at the [UMLS Download](https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html).
+Step 1: install a version of UMLS (e.g., 2022AA-ACTIVE) by following this [tutorial](https://github.com/UMLS-DL/UVA/wiki/How-to-install-UMLS). UMLS can be downloaded at the [UMLS Download](https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html).
 
 During the installation process, active subset of vocabularies can be selected.
 
