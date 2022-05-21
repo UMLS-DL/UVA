@@ -1,4 +1,28 @@
 # UMLS Vocabulary Alignment
+## Requirements
+Step 1: install a version of UMLS, for example, 2021AA-ACTIVE. UMLS can be downloaded at the [UMLS Download](https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html).
+
+During the installation process, active subset of vocabularies can be selected.
+
+Step 2: after the installation process finishes, copy the .RRF files in the resulting META directory into $WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META.
+
+<pre>
+$ cd $WORKSPACE/UMLS_VERSIONS/
+$ ls
+2020AA-ACTIVE 2021AA-ACTIVE 2021AB-ACTIVE
+$ cd 2021AA-ACTIVE
+$ ls
+META
+$ cd META
+<b>MRCONSO.RRF  MRREL.RRF  MRSTY.RRF  MRXNS_ENG.RRF  MRXNW_ENG.RRF</b>
+</pre>
+The above .RRF files are **mandatory** for the UVA project.
+
+Step 3: install two conda profiles: `uva_kge` and `tf_uva`
+```
+$ sh $WORKSPACE/bin/install_pykeen_env.sh
+$ sh $WORKSPACE/bin/install_tf230_uva.sh
+```
 
 ## Download folder for existing UVA datasets
 Three UVA datasets 2020AA, 2021AA, and 2021AB are available for download.
@@ -54,29 +78,6 @@ python $WORKSPACE/bin/run_data_generator.py \
 </pre>
 The resulting MRCONSO_MASTER.RRF file is located in the $WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL
 
-## Requirements
-Step 1: install a version of UMLS, for example, 2021AA-ACTIVE. UMLS can be downloaded at [https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html]
-During the installation process, active subset of vocabularies can be selected.
-
-Step 2: after the installation process finishes, copy the .RRF files in the resulting META directory into $WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META.
-
-<pre>
-$ cd $WORKSPACE/UMLS_VERSIONS/
-$ ls
-2020AA-ACTIVE 2021AA-ACTIVE 2021AB-ACTIVE
-$ cd 2021AA-ACTIVE
-$ ls
-META
-$ cd META
-<b>MRCONSO.RRF  MRREL.RRF  MRSTY.RRF  MRXNS_ENG.RRF  MRXNW_ENG.RRF</b>
-</pre>
-The above .RRF files are **mandatory** for the UVA project.
-
-Step 3: install two conda profiles: `uva_kge` and `tf_uva`
-```
-$ sh $WORKSPACE/bin/install_pykeen_env.sh
-$ sh $WORKSPACE/bin/install_tf230_uva.sh
-```
 
 ## How to generate a new UVA dataset?
 Below is the command for generating the 2021AA-ACTIVE dataset using 499 nodes with 20 threads and 180GB of RAM in each node.
