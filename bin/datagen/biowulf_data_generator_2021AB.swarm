@@ -1,0 +1,1 @@
+swarm -f /data/Bodenreider_UMLS_DL/UVA/bin/datagen/biowulf_data_generator_2021AB.sh -b 1 -g 240 -t 12 --time 2-20:00:00 --logdir /data/Bodenreider_UMLS_DL/UVA/logs
