@@ -1,22 +1,40 @@
 # UMLS Vocabulary Alignment
 
-## Download directory
+## Download folder
 Three UVA datasets 2020AA, 2021AA, and 2021AB are available for download.
 The official link with UMLS authentication from the NLM is under processing. For now, these datasets can be downloaded at [UVA](https://drive.google.com/drive/folders/1P72Q2FNo4MKEgIBVv2lGQinJzwHF2cuG?usp=sharing).
 
 ```
+$ cd $WORKSPACE/UMLS_VERSIONS/download
+$ ls
 2020AA-ACTIVE.tar.gz
 2021AA-ACTIVE.tar.gz
 2021AB-ACTIVE.tar.gz
-biowordvec.txt
+biowordvec.txt 
+$ cp biowordvec.txt $WORKSPACE/extra/
+$ mkdir 2021AA-ACTIVE
+$ mkdir 2021AA-ACTIVE/NEGPOS1
+$ cp 2021AA-ACTIVE.tar.gz 2021AA-ACTIVE/NEGPOS1/
+$ cd 2021AA-ACTIVE/NEGPOS1/
+$ tar -xzvf 2021AA-ACTIVE.tar.gz
+$ ls 2021AA-ACTIVE/
+2021AA-ACTIVE/GENTEST_DS_RAN_SIM_TEST_DS.RRF
+2021AA-ACTIVE/LEARNING_DS_ALL_TRAIN_DS.RRF
+2021AA-ACTIVE/LEARNING_DS_ALL_TEST_DS.RRF
+2021AA-ACTIVE/GENTEST_DS_ALL_TEST_DS.RRF
+2021AA-ACTIVE/LEARNING_DS_ALL_DEV_DS.RRF
+2021AA-ACTIVE/GENTEST_DS_RAN_NOSIM_TEST_DS.RRF
+2021AA-ACTIVE/GENTEST_DS_TOPN_SIM_TEST_DS.RRF
 ```
+
 
 ## How to generate UVA dataset?
 
 ### Requirements
 Step 1: install a version of UMLS, for example, 2021AA-ACTIVE. UMLS can be downloaded at [https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html]
 During the installation process, active subset of vocabularies can be selected.
-After the installation process finishes, copy the .RRF files in the resulting META directory into $WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META.
+
+Step 2: after the installation process finishes, copy the .RRF files in the resulting META directory into $WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META.
 
 ```
 $ cd $WORKSPACE/UMLS_VERSIONS/
