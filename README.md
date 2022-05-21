@@ -285,11 +285,11 @@ The resulting training performance and checkpoints of each run is located inside
 ## References
 1. Vinh Nguyen, Olivier Bodenreider. _UVA Resources for Biomedical Vocabulary Alignment at Scale in the UMLS Metathesaurus_. 2022. Submitted to ISWC. 2022
 2. Vinh Nguyen, Hong Yung Yip, Goonmeet Bajaj, Thilini Wijesiriwardene, Vishesh Javangula, Srinivasan Parthasarathy, Amit Sheth, Olivier Bodenreider. _Context-Enriched Learning Models for Aligning Biomedical Vocabularies at Scale in the UMLS Metathesaurus_. Proceedings of the Web Conference 2022 (WWW'22). ACM. 2022
-3. Vinh Nguyen, Hong Yung Yip, Olivier Bodenreider. Biomedical Vocabulary Alignment at Scale in the UMLS Metathesaurus. Proceedings of the Web Conference 2021 (WWW'21). ACM. 2021
-4. Vinh Nguyen, Olivier Bodenreider. Adding an Attention Layer Improves the Performance of a Neural Network Architecture for Synonymy Prediction in the UMLS Metathesaurus. Proceedings of the MedInfo Conference 2021.
-5. Bajaj, Goonmeet, Vinh Nguyen, Thilini Wijesiriwardene, Hong Yung Yip, Vishesh Javangula, Amit Sheth, Srinivasan Parthasarathy, and Olivier Bodenreider. "Evaluating Biomedical Word Embeddings for Vocabulary Alignment at Scale in the UMLS Metathesaurus Using Siamese Networks." In Proceedings of the Third Workshop on Insights from Negative Results in NLP, pp. 82-87. 2022.
-6. Goonmeet Bajaj, Vinh Nguyen, Thilini Wijesiriwardene, Hong Yung Yip, Vishesh Javangula, Srinivasan Parthasarathy, Amit Sheth, Olivier Bodenreider. Evaluating Biomedical BERT Models for Vocabulary Alignment at Scale in the UMLS Metathesaurus. arXiv preprint arXiv:2109.13348. 2021
-7. Thilini Wijesiriwardene, Vinh Nguyen, Goonmeet Bajaj, Hong Yung Yip, Vishesh Javangula, Yuqing Mao, Kin Wah Fung, Srinivasan Parthasarathy, Amit P Sheth, Olivier Bodenreider. UBERT: A Novel Language Model for Synonymy Prediction at Scale in the UMLS Metathesaurus. arXiv preprint arXiv:2204.12716. 2021
+3. Vinh Nguyen, Hong Yung Yip, Olivier Bodenreider. _Biomedical Vocabulary Alignment at Scale in the UMLS Metathesaurus_. Proceedings of the Web Conference 2021 (WWW'21). ACM. 2021
+4. Vinh Nguyen, Olivier Bodenreider. _Adding an Attention Layer Improves the Performance of a Neural Network Architecture for Synonymy Prediction in the UMLS Metathesaurus_. Proceedings of the MedInfo Conference 2021.
+5. Bajaj, Goonmeet, Vinh Nguyen, Thilini Wijesiriwardene, Hong Yung Yip, Vishesh Javangula, Amit Sheth, Srinivasan Parthasarathy, and Olivier Bodenreider. _Evaluating Biomedical Word Embeddings for Vocabulary Alignment at Scale in the UMLS Metathesaurus Using Siamese Networks_. In Proceedings of the Third Workshop on Insights from Negative Results in NLP, pp. 82-87. 2022.
+6. Goonmeet Bajaj, Vinh Nguyen, Thilini Wijesiriwardene, Hong Yung Yip, Vishesh Javangula, Srinivasan Parthasarathy, Amit Sheth, Olivier Bodenreider. _Evaluating Biomedical BERT Models for Vocabulary Alignment at Scale in the UMLS Metathesaurus_. arXiv preprint arXiv:2109.13348. 2021
+7. Thilini Wijesiriwardene, Vinh Nguyen, Goonmeet Bajaj, Hong Yung Yip, Vishesh Javangula, Yuqing Mao, Kin Wah Fung, Srinivasan Parthasarathy, Amit P Sheth, Olivier Bodenreider. _UBERT: A Novel Language Model for Synonymy Prediction at Scale in the UMLS Metathesaurus_. arXiv preprint arXiv:2204.12716. 2021
 
 
 ## Contact
