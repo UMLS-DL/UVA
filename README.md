@@ -1,6 +1,6 @@
 # UMLS Vocabulary Alignment
 
-## Download folder
+## Download folder for existing UVA datasets
 Three UVA datasets 2020AA, 2021AA, and 2021AB are available for download.
 The official link with UMLS authentication from the NLM is under processing. For now, these datasets can be downloaded at [UVA](https://drive.google.com/drive/folders/1P72Q2FNo4MKEgIBVv2lGQinJzwHF2cuG?usp=sharing).
 
@@ -28,7 +28,7 @@ $ ls 2021AA-ACTIVE/
 ```
 
 
-## How to generate UVA dataset?
+## How to generate a new UVA dataset?
 
 ### Requirements
 Step 1: install a version of UMLS, for example, 2021AA-ACTIVE. UMLS can be downloaded at [https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html]
