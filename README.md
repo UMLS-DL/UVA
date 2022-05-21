@@ -74,6 +74,12 @@ MRCONSO.RRF  MRREL.RRF  MRSTY.RRF  MRXNS_ENG.RRF  MRXNW_ENG.RRF
 ```
 The above .RRF files are **mandatory** for the UVA project.
 
+Step 3: install two conda profiles: `uva_kge` and `tf_uva`
+```
+$ sh $WORKSPACE/bin/install_pykeen_env.sh
+$ sh $WORKSPACE/bin/install_tf230_uva.sh
+```
+
 ###  Generating a UVA dataset
 Below is the command for generating the 2021AA-ACTIVE dataset using 499 nodes with 20 threads and 180GB of RAM in each node.
 
