@@ -1,4 +1,10 @@
 # UMLS Vocabulary Alignment
+
+## Latest Updates
+* The [UVA Challenge infopage](https://github.com/UMLS-DL/UVA/wiki/UVA-Challenge) is created
+* The [How to Install UMLS page](https://github.com/UMLS-DL/UVA/wiki/How-to-install-UMLS) is created
+* A paper title `UVA Resources for Biomedical Vocabulary Alignment at Scale in the UMLS Metathesaurus` has been submitted to the ISWC Resource track. A copy of the paper submission has been submitted to the arxiv and will be available soon.
+
 ## Requirements
 Step 1: install a version of UMLS (e.g., 2022AA-ACTIVE) by following this [tutorial](https://github.com/UMLS-DL/UVA/wiki/How-to-install-UMLS). UMLS can be downloaded at the [UMLS Download](https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html).
 
