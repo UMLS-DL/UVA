@@ -121,6 +121,8 @@ swarm -f $WORKSPACE/bin/datagen/biowulf_data_generator_2021AA.sh
 ## How to train a LexLM model using a UVA dataset?
 Below are the commands for preparing, training, and testing a LexLM model to be executed in a sequence. The paths need to be adjusted according to the project setting if using the downloaded dataset path parameter $train_dataset_fp instead of $train_dataset_dp.
 
+The training and testing job was deployed to a server with 240 GB of system RAM and a Tesla V100X 32G GPU. The batch size may be reduced or increased based on the GPU RAM.
+
 <pre>
 WORKSPACE=/data/Bodenreider_UMLS_DL/UVA; \
 UMLS_VERSION=2021AA-ACTIVE; \
@@ -182,6 +184,8 @@ python  $WORKSPACE/bin/run_umls_classifier.py \
 </pre>
 ## How to train a ConLM model using a UVA dataset?
 Below are the commands for preparing, training, and testing a ConLM model to be executed in a sequence. The paths need to be adjusted according to the project setting if using the downloaded dataset path parameter $train_dataset_fp instead of $train_dataset_dp.
+
+The training and testing job was deployed to a server with 240 GB of system RAM and a Tesla V100X 32G GPU. The batch size may be reduced or increased based on the GPU RAM.
 
 <pre>
 $ cd $WORKSPACE/bin/conlm
