@@ -54,9 +54,7 @@ python $WORKSPACE/bin/run_data_generator.py \
 </pre>
 The resulting MRCONSO_MASTER.RRF file is located in the $WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL
 
-## How to generate a new UVA dataset?
-
-### Requirements
+## Requirements
 Step 1: install a version of UMLS, for example, 2021AA-ACTIVE. UMLS can be downloaded at [https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html]
 During the installation process, active subset of vocabularies can be selected.
 
@@ -80,7 +78,7 @@ $ sh $WORKSPACE/bin/install_pykeen_env.sh
 $ sh $WORKSPACE/bin/install_tf230_uva.sh
 ```
 
-###  Generating a UVA dataset
+## How to generate a new UVA dataset?
 Below is the command for generating the 2021AA-ACTIVE dataset using 499 nodes with 20 threads and 180GB of RAM in each node.
 
 <pre>
