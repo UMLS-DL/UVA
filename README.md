@@ -288,3 +288,6 @@ The resulting training performance and checkpoints of each run is located inside
 6. Thilini Wijesiriwardene, Vinh Nguyen, Goonmeet Bajaj, Hong Yung Yip, Vishesh Javangula, Yuqing Mao, Kin Wah Fung, Srinivasan Parthasarathy, Amit P Sheth, Olivier Bodenreider. UBERT: A Novel Language Model for Synonymy Prediction at Scale in the UMLS Metathesaurus. arXiv preprint arXiv:2204.12716. 2021
 
 
+### Contact
+Any issue found while running the code can be posted in the [Issues](https://github.com/UMLS-DL/UVA/issues).
+Any question about the UVA project, please email Vinh Nguyen at vinh.nguyen@nih.gov.
