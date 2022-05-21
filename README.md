@@ -1,8 +1,68 @@
 # UMLS Vocabulary Alignment
 
-## Download datasets
+## Download directory
 Three UVA datasets 2020AA, 2021AA, and 2021AB are available for download.
 The official link with UMLS authentication from the NLM is under processing. For now, these datasets can be downloaded at [UVA](https://drive.google.com/drive/folders/1P72Q2FNo4MKEgIBVv2lGQinJzwHF2cuG?usp=sharing).
+
+```
+2020AA-ACTIVE.tar.gz
+2021AA-ACTIVE.tar.gz
+2021AB-ACTIVE.tar.gz
+biowordvec.txt
+```
+
+## How to generate UVA dataset?
+
+### Requirements
+Step 1: install a version of UMLS, for example, 2021AA-ACTIVE. UMLS can be downloaded at [https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html]
+During the installation process, active subset of vocabularies can be selected.
+After the installation process finishes, copy the .RRF files in the resulting META directory into $WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META.
+
+```
+$ cd $WORKSPACE/UMLS_VERSIONS/
+$ ls
+2020AA-ACTIVE 2021AA-ACTIVE 2021AB-ACTIVE
+$ cd 2021AA-ACTIVE
+$ ls
+META
+$ cd META
+MRCONSO.RRF  MRREL.RRF  MRSTY.RRF  MRXNS_ENG.RRF  MRXNW_ENG.RRF
+# The above .RRF files are mandatory for the UVA project.
+```
+###  Generating a UVA dataset
+Below is the command for generating the 2021AA-ACTIVE dataset using 499 nodes with 20 threads and 180GB of RAM in each node.
+
+```
+$ cat $WORKSPACE/bin/datagen/biowulf_data_generator_2021AA.sh
+#!/bin/bash
+# Generating datasets
+WORKSPACE=/data/Bodenreider_UMLS_DL/UVA; \
+UMLS_VERSION=2021AA-ACTIVE; \
+python $WORKSPACE/bin/run_data_generator.py \
+--job_name=21AA_GEN --server=Biowulf \
+--workspace_dp=$WORKSPACE \
+--umls_version_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION \
+--umls_dl_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL \
+--gen_master_file=true \
+--gen_pos_pairs=true \
+--gen_swarm_file=true \
+--exec_gen_neg_pairs_swarm=true \
+--gen_neg_pairs=true \
+--gen_dataset=true \
+--run_slurm_job=true \
+--ntasks=499 \
+--n_processes=20 \
+--ram=180 \
+--dataset_version_dn=NEGPOS1 \
+--neg_to_pos_rate=1 \
+--debug=false
+```
+Below is the sample code to deploy the above job to NIH Biowulf HPC
+```
+swarm -f $WORKSPACE/bin/datagen/biowulf_data_generator_2021AA.sh 
+-b 1 -g 240 -t 12 --time 2-20:00:00 \
+--logdir $WORKSPACE/logs
+```
 
 ## References
 1. Vinh Nguyen, Olivier Bodenreider. _UVA Resources for Biomedical Vocabulary Alignment at Scale in the UMLS Metathesaurus_. 2022. Submitted to ISWC. 2022
