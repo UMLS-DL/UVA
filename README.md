@@ -27,6 +27,32 @@ $ tar -xzvf 2021AA-ACTIVE.tar.gz
 $ ls 2021AA-ACTIVE/
 ```
 
+If using a downloaded UVA dataset, a MRCONSO_MASTER.RRF file needs to be generated for the baselines as follows.
+```
+#!/bin/bash
+# Generating datasets
+WORKSPACE=/data/Bodenreider_UMLS_DL/UVA; \
+UMLS_VERSION=2021AA-ACTIVE; \
+python $WORKSPACE/bin/run_data_generator.py \
+--job_name=21AA_GEN --server=Biowulf \
+--workspace_dp=$WORKSPACE \
+--umls_version_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION \
+--umls_dl_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL \
+--gen_master_file=true \
+--gen_pos_pairs=false \
+--gen_swarm_file=false \
+--exec_gen_neg_pairs_swarm=false \
+--gen_neg_pairs=false \
+--gen_dataset=false \
+--run_slurm_job=false \
+--ntasks=499 \
+--n_processes=20 \
+--ram=180 \
+--dataset_version_dn=NEGPOS1 \
+--neg_to_pos_rate=1 \
+--debug=false
+```
+The resulting MRCONSO_MASTER.RRF file is located in the $WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL
 
 ## How to generate a new UVA dataset?
 
@@ -78,12 +104,174 @@ python $WORKSPACE/bin/run_data_generator.py \
 ```
 The resulting dataset version is located inside the $WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1 with two folders GENTEST_DS and LEARNING_DS.
 
-Below is the sample code to deploy the above job to NIH Biowulf HPC
+Below is the sample code to deploy the above data generator job to NIH Biowulf HPC
 ```
+$ cat $WORKSPACE/bin/datagen/biowulf_data_generator_2021AA.swarm
 swarm -f $WORKSPACE/bin/datagen/biowulf_data_generator_2021AA.sh 
 -b 1 -g 240 -t 12 --time 2-20:00:00 \
 --logdir $WORKSPACE/logs
 ```
+
+## How to train a LexLM model using a UVA dataset?
+Below are the commands for preparing, training, and testing a LexLM model to be executed in a sequence. The paths need to be adjusted according to the project setting if using the downloaded datasets.
+
+```
+WORKSPACE=/data/Bodenreider_UMLS_DL/UVA; \
+UMLS_VERSION=2021AA-ACTIVE; \
+python $WORKSPACE/bin/run_umls_classifier.py \
+--workspace_dp=$WORKSPACE \
+--umls_version_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION \
+--umls_dl_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL \
+--dataset_version_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1 \
+--train_dataset_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1/LEARNING_DS/ALL \
+--run_id="lexlm_uva_run1"  \
+--n_epoch=100  \
+--batch_size=8192  \
+--do_train=false \
+--do_predict=false \
+--do_prep=true  \
+--generator_workers=16
+```
+
+```
+conda activate tf_uva; \
+WORKSPACE=/data/Bodenreider_UMLS_DL/UVA; \
+UMLS_VERSION=2021AA-ACTIVE; \
+python  $WORKSPACE/bin/run_umls_classifier.py \
+--workspace_dp=$WORKSPACE \
+--umls_version_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION \
+--umls_dl_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL \
+--dataset_version_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1 \
+--train_dataset_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1/LEARNING_DS/ALL \
+--run_id="lexlm_uva_run1_2021AA-ACTIVE"  \
+--exp_flavor=1 \
+--n_epoch=100  \
+--batch_size=8192  \
+--do_prep=false  \
+--do_train=true \
+--do_predict=false  \
+--generator_workers=8
+```
+
+```
+WORKSPACE=/data/Bodenreider_UMLS_DL/UVA; \
+UMLS_VERSION=2021AA-ACTIVE; \
+python  $WORKSPACE/bin/run_umls_classifier.py \
+--workspace_dp=$WORKSPACE \
+--umls_version_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION \
+--umls_dl_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL \
+--dataset_version_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1 \
+--train_dataset_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1/LEARNING_DS/ALL \
+--test_dataset_fp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1/GENTEST_DS/GENTEST_DS_ALL_TEST_DS.RRF \
+--run_id="lexlm_uva_run1_$UMLS_VERSION"  \
+--exp_flavor=1 \
+--n_epoch=100  \
+--batch_size=8192  \
+--do_prep=false  \
+--do_train=false \
+--do_predict=true  \
+--start_epoch_predict=1 \
+--end_epoch_predict=100 \
+--generator_workers=8 
+```
+## How to train a ConLM model using a UVA dataset?
+Below are the commands for preparing, training, and testing a ConLM model to be executed in a sequence. The paths need to be adjusted according to the project setting if using the downloaded datasets.
+
+```
+$ cd $WORKSPACE/bin/conlm
+conda activate uva_kge; \
+WORKSPACE=/data/Bodenreider_UMLS_DL/UVA; \
+UMLS_VERSION=2021AA-ACTIVE; \
+VARIANT="All_Triples"; \
+MODEL="ComplEx" ; \
+EPOCHS=100 ; \
+OPTIMIZER="Adam" ; \
+KGE_HOME=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL/CONLM; \
+mkdir -p $KGE_HOME; \
+cp $WORKSPACE/bin/conlm/UMLS_Parser.py $WORKSPACE/bin/conlm/gen_dataset.sh $WORKSPACE/bin/conlm/gen_direct.sh $WORKSPACE/bin/conlm/SemGroups.txt $KGE_HOME/ ; \
+cd $KGE_HOME; \
+sh $KEG_HOME/gen_dataset.sh; 
+```
+```
+python $WORKSPACE/bin/run_train_kge.py \
+--root_dir=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL/CONLM \
+--kge_model=$MODEL \
+--optimizer=$OPTIMIZER \
+--kge_triple_variants=$VARIANT \
+--lr=0.01 \
+--embedding_dim=25 \
+--loss="marginranking" \
+--margin=1 \
+--training_loop="slcwa" \
+--num_epochs=100 \
+--batch_size=1024 \
+--evaluator="rankbased" \
+--negative_sampler="basic" \
+--num_negs_per_pos=50 \
+--create_inverse_triples=False \
+--enable_eval_filtering=True; 
+```
+```
+python $WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL/CONLM/UMLS_Parser.py \
+--KGE_Home=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL/CONLM \
+--meta_dl_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL \
+--Task="gen_aui2convec" \
+--Model=$MODEL \
+--Optimizer=$OPTIMIZER \
+--Variant=$VARIANT \
+--context_dim=50 \
+--num_epochs=$EPOCHS; 
+```
+```
+conda activate tf_uva; \
+python $WORKSPACE/bin/run_umls_classifier.py \
+--workspace_dp=$WORKSPACE \
+--KGE_Home=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL/CONLM \
+--umls_version_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION \
+--umls_dl_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL \
+--dataset_version_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1 \
+--train_dataset_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1/LEARNING_DS/ALL \
+--exp_flavor=2 \
+--context_vector_dim=150 \
+--ConVariant=$VARIANT \
+--Model=$MODEL \
+--ConOptimizer=$OPTIMIZER \
+--ConEpochs=$EPOCHS \
+--do_prep=False \
+--run_id="conlm_uva_run1_$UMLS_VERSION" \
+--n_epoch=$EPOCHS \
+--batch_size=8192 \
+--do_train=True \
+--do_predict=False \
+--generator_workers=8 \
+```
+```
+conda activate tf_uva ; \
+python $WORKSPACE/bin/run_umls_classifier.py \
+--workspace_dp=$WORKSPACE \
+--KGE_Home=$KGE_HOME \
+--umls_version_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION \
+--umls_dl_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL \
+--dataset_version_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1 \
+--test_dataset_fp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1/GENTEST_DS/GENTEST_DS_ALL_TEST_DS.RRF \
+--train_dataset_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1/LEARNING_DS/ALL \
+--exp_flavor=2 \
+--context_vector_dim=150 \
+--ConVariant=$VARIANT \
+--Model=$MODEL \
+--ConOptimizer=$OPTIMIZER \
+--ConEpochs=$EPOCHS \
+--do_prep=False \
+--run_id="conlm_uva_run1_$UMLS_VERSION" \
+--n_epoch=$EPOCHS \
+--batch_size=8192 \
+--do_train=False \
+--do_predict=True \
+--generator_workers=8 \
+--start_epoch_predict=1 \
+--end_epoch_predict=100
+```
+The resulting training performance and checkpoints of each run is located inside the `TRAINING` folder of each $UMLS_VERSION.
 
 ## References
 1. Vinh Nguyen, Olivier Bodenreider. _UVA Resources for Biomedical Vocabulary Alignment at Scale in the UMLS Metathesaurus_. 2022. Submitted to ISWC. 2022
