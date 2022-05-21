@@ -17,7 +17,6 @@ $ mkdir 2021AA-ACTIVE/NEGPOS1
 $ cp 2021AA-ACTIVE.tar.gz 2021AA-ACTIVE/NEGPOS1/
 $ cd 2021AA-ACTIVE/NEGPOS1/
 $ tar -xzvf 2021AA-ACTIVE.tar.gz
-$ ls 2021AA-ACTIVE/
 2021AA-ACTIVE/GENTEST_DS_RAN_SIM_TEST_DS.RRF
 2021AA-ACTIVE/LEARNING_DS_ALL_TRAIN_DS.RRF
 2021AA-ACTIVE/LEARNING_DS_ALL_TEST_DS.RRF
@@ -25,6 +24,7 @@ $ ls 2021AA-ACTIVE/
 2021AA-ACTIVE/LEARNING_DS_ALL_DEV_DS.RRF
 2021AA-ACTIVE/GENTEST_DS_RAN_NOSIM_TEST_DS.RRF
 2021AA-ACTIVE/GENTEST_DS_TOPN_SIM_TEST_DS.RRF
+$ ls 2021AA-ACTIVE/
 ```
 
 
@@ -45,8 +45,9 @@ $ ls
 META
 $ cd META
 MRCONSO.RRF  MRREL.RRF  MRSTY.RRF  MRXNS_ENG.RRF  MRXNW_ENG.RRF
-# The above .RRF files are mandatory for the UVA project.
 ```
+The above .RRF files are **mandatory** for the UVA project.
+
 ###  Generating a UVA dataset
 Below is the command for generating the 2021AA-ACTIVE dataset using 499 nodes with 20 threads and 180GB of RAM in each node.
 
