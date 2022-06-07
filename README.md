@@ -288,6 +288,45 @@ python $WORKSPACE/bin/run_umls_classifier.py \
 </pre>
 The resulting training performance and checkpoints of each run is located inside the `TRAINING` folder of each $UMLS_VERSION.
 
+## How to run the RBA?
+<pre>
+#!/bin/sh
+conda activate tf_uva; \
+WORKSPACE=/data/Bodenreider_UMLS_DL/UVA; \
+UMLS_VERSION=2021AA-ACTIVE; \
+python $WORKSPACE/bin/run_rba_evaluator.py \
+--workspace_dp=$WORKSPACE \
+--umls_dp=$WORKSPACE/UMLS_VERSIONS \
+--umls_dl_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL \
+--test_dataset_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1/GENTEST_DS  \
+--rba_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/RBA \
+--do_prep=true \
+--do_compute_rule_closure_in_batch=false \
+--do_eval=false \
+--closure_n_processes=16 \
+--ntasks=250 \
+--conda_env=tf_uva \
+--ram=120 \
+--start_loop_cnt=0 \
+--run_slurm_job=true \
+--debug=false \
+--regenerate_files=true
+</pre>
+
+<pre>
+python $WORKSPACE/bin/run_rba_evaluator.py \
+--workspace_dp=$WORKSPACE \
+--umls_dp=$UMLS_VERSIONS \
+--umls_dl_dp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/META_DL \
+--test_dataset_fp=$WORKSPACE/UMLS_VERSIONS/$UMLS_VERSION/NEGPOS1/GENTEST_DS/2020AA-ACTIVE_ALL_MODEL_GENTEST_DS_TEST_DS.RRF  \
+--do_prep=false \
+--do_eval=true \
+--do_compute_rule_closure_in_batch=false  \
+--closure_n_processes=36 \
+--flavor=SCUI_LS_SG_TRANS \
+--test_dataset_dn=GENTEST_DS
+</pre>
+
 ## References
 
 [1] Vinh Nguyen, Olivier Bodenreider. _UVA Resources for Biomedical Vocabulary Alignment at Scale in the UMLS Metathesaurus_. 2022. Submitted to ISWC. 2022.
