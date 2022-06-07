@@ -6,7 +6,7 @@
 * A paper title `UVA Resources for Biomedical Vocabulary Alignment at Scale in the UMLS Metathesaurus` has been submitted to the ISWC Resource track. A copy of the paper submission is available at https://arxiv.org/abs/2205.10575v1.
 
 ## Requirements
-Step 1: install a version of UMLS (e.g., 2022AA-ACTIVE) by following this [tutorial](https://github.com/UMLS-DL/UVA/wiki/How-to-install-UMLS). UMLS can be downloaded at the [UMLS Download](https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html).
+Step 1: install a version of UMLS (e.g., 2021AA-ACTIVE) by following this [tutorial](https://github.com/UMLS-DL/UVA/wiki/How-to-install-UMLS). UMLS can be downloaded at the [UMLS Download](https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html).
 
 During the installation process, active subset of vocabularies can be selected.
 
